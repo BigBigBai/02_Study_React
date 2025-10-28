@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import TextInput from './inputs/TextInput';
+import SelectInput from './inputs/SelectInput';
+import TextareaInput from './inputs/TextareaInput';
 
 const NoteForm = ({ notes, setNotes }) => {
   //   const [title, setTitle] = useState('');
@@ -51,7 +54,7 @@ const NoteForm = ({ notes, setNotes }) => {
 
       {isFormVisible && (
         <form onSubmit={handleSubmit} className='mb-6'>
-          <div className='mb-4'>
+          {/* <div className='mb-4'>
             <lable className='block font-semibold'>Title:</lable>
             <input
               type='text'
@@ -63,9 +66,17 @@ const NoteForm = ({ notes, setNotes }) => {
               className='w-full p-2 border rouded-lg'
               required
             />
-          </div>
+          </div> */}
 
-          <div className='mb-4'>
+          <TextInput
+            label='Title'
+            name='title'
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+
+          {/* <div className='mb-4'>
             <label className='block font-semibold'>Priority:</label>
             <select
               name='priority'
@@ -78,9 +89,21 @@ const NoteForm = ({ notes, setNotes }) => {
               <option value='Medium'>🟠 Medium</option>
               <option value='Low'>🟢 Low</option>
             </select>
-          </div>
+          </div> */}
 
-          <div className='mb-4'>
+          <SelectInput
+            label='Priority'
+            name='priority'
+            value={formData.priority}
+            onChange={handleChange}
+            options={[
+              { value: 'High', label: '🔴 High' },
+              { value: 'Medium', label: '🟠 Medium' },
+              { value: 'Low', label: '🟢 Low' },
+            ]}
+          ></SelectInput>
+
+          {/* <div className='mb-4'>
             <label className='block font-semibold'>Category:</label>
             <select
               name='category'
@@ -93,9 +116,21 @@ const NoteForm = ({ notes, setNotes }) => {
               <option value='Personal'>🏠 Personal</option>
               <option value='Ideas'>💡 Ideas</option>
             </select>
-          </div>
+          </div> */}
 
-          <div className='mb-4'>
+          <SelectInput
+            label='Category'
+            name='category'
+            value={formData.category}
+            onChange={handleChange}
+            options={[
+              { value: 'Work', label: '📂 Work' },
+              { value: 'Personal', label: '🏠 Personal' },
+              { value: 'Ideas', label: '💡 Ideas' },
+            ]}
+          ></SelectInput>
+
+          {/* <div className='mb-4'>
             <label className='block font-semibold'>Description:</label>
             <textarea
               name='description'
@@ -105,7 +140,15 @@ const NoteForm = ({ notes, setNotes }) => {
               className='w-full p-2 border rounded-lg'
               required
             ></textarea>
-          </div>
+          </div> */}
+
+          <TextareaInput
+            label='Description'
+            name='description'
+            value={formData.description}
+            onChange={handleChange}
+            required
+          ></TextareaInput>
 
           <button
             type='submit'
