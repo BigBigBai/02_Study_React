@@ -1,7 +1,20 @@
-const TimerControls = ({isRunning, onToggle, onReset}) => {
-  return (
+import { useRef, useEffect } from 'react';
+
+const TimerControls = ({ isRunning, onToggle, onReset }) => {
+    const startButtonRef = useRef(null);
+
+    //Auto-focus the Start button when the component mounts
+    useEffect(() => {
+        if(startButtonRef.current) {
+            startButtonRef.current.focus();
+        }
+    }, []);
+
+  
+    return (
     <div className='flex flex-col gap-2'>
       <button
+        ref={startButtonRef}
         onClick={onToggle}
         className='bg-green-500 w-full text-white px-4 py-2 cursor-ponter rounded hover:bg-green-600'
       >
