@@ -1,3 +1,5 @@
+import Note from './Note';
+
 const NoteList = ({ notes, deleteNote }) => {
   return (
     <div className='space-y-4'>
@@ -5,7 +7,7 @@ const NoteList = ({ notes, deleteNote }) => {
         <p className='text-center text-gray-500'>No notes yet!</p>
       ) : null}
 
-      {notes.map((note) => (
+      {/* {notes.map((note) => (
         <div
           key={note.id}
           className='p-4 bg-white rounded-lg shadow-md border-l-4'
@@ -33,6 +35,10 @@ const NoteList = ({ notes, deleteNote }) => {
             Delete Note
           </button>
         </div>
+      ))} */}
+
+      {notes.map((note) => (
+        <Note key={note.id} note={note} deleteNote={deleteNote} />
       ))}
     </div>
   );
