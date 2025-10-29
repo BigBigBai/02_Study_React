@@ -56,30 +56,30 @@ const App = () => {
 
   return (
     <div>
-      <h1>Crypto Dash</h1>
+      <Header />
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <HomePage
+              coins={coins}
+              filter={filter}
+              setFilter={setFilter}
+              limit={limit}
+              setLimit={setLimit}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              loading={loading}
+              error={error}
+            />
+          }
+        />
 
-      <div className='top-controls'>
-        <FilterInput filter={filter} onFilterChange={setFilter} />
-        <LimitSelecor limit={limit} onLimitChange={setLimit} />
-        <SortSelector sortBy={sortBy} onSortChange={setSortBy} />
-      </div>
+        <Route path='/about' element={<AboutPage />} />
+        <Route path='/coin/:id' element={<CoinDetailsPage />} />
 
-      {loading && <p>Loading...</p>}
-      {error && (
-        <div className='error'>
-          <p>❌ {error}</p>
-        </div>
-      )}
-
-      {!loading && !error && (
-        <main className='grid'>
-          {filteredCoins.length > 0 ? (
-            filteredCoins.map((coin) => <CoinCard key={coin.id} coin={coin} />)
-          ) : (
-            <p>No coins match your filter.</p>
-          )}
-        </main>
-      )}
+        <Route path='*' element={<NotFound />} />
+      </Routes>
     </div>
   );
 };
