@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import CoinCard from './components/CoinCard';
-import LimitSelecor from './components/LimitSelector';
-import FilterInput from './components/FilterInput';
+import { Routes, Route } from 'react-router';
+import HomePage from './pages/Home';
+import AboutPage from './pages/About';
+import Header from './components/Header';
+import NotFound from './pages/Not-found';
 import SortSelector from './components/SortSelector';
 
 const API_URL = import.meta.env.VITE_COINS_API_URL;
@@ -13,6 +15,7 @@ const App = () => {
 
   const [limit, setLimit] = useState(10);
   const [sortBy, setSortBy] = useState('market_cap_desc');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     // fetch(API_URL)
