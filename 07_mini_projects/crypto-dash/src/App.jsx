@@ -4,7 +4,7 @@ import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 import Header from './components/Header';
 import NotFound from './pages/Not-found';
-import SortSelector from './components/SortSelector';
+import CoinDetailsPage from './pages/Coin-details';
 
 const API_URL = import.meta.env.VITE_COINS_API_URL;
 
@@ -53,32 +53,6 @@ const App = () => {
     };
     fetchCoins();
   }, [limit]);
-
-  const [filter, setFilter] = useState('');
-
-  const filteredCoins = coins
-    .filter(
-      (coin) =>
-        coin.name.toLowerCase().includes(filter.toLowerCase()) ||
-        coin.symbol.toLowerCase().includes(filter.toLowerCase())
-    )
-    .slice()
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'market_cap_desc':
-          return b.market_cap - a.market_cap;
-        case 'price_desc':
-          return b.current_price - a.current_price;
-        case 'price_asc':
-          return a.current_price - b.current_price;
-        case 'change_desc':
-          return b.price_change_percentage_24h - a.price_change_percentage_24h;
-        case 'change_asc':
-          return a.price_change_percentage_24h - b.price_change_percentage_24h;
-        default:
-          return 0;
-      }
-    });
 
   return (
     <div>
