@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ProductList from './components/ProductList';
+import Header from './components/Header';
 
 export default function App() {
   // const [products, setProducts] = useState([]);
@@ -26,13 +27,16 @@ export default function App() {
   // }, []);
 
   return (
-    <div className='min-h-screen bg-gray-100 p-6'>
-      <h1 className='text-3xl font-bold mb-6'>🛒 Product Catalog</h1>
+    <>
+      <Header />
+      <div className='min-h-screen bg-gray-100 p-6'>
+        <h1 className='text-3xl font-bold mb-6'>🛒 Product Catalog</h1>
 
-      {/* {loading && <p>Loading...</p>}
+        {/* {loading && <p>Loading...</p>}
       {error && <p className='text-red-500'>❌ {error}</p>} */}
 
-      <ProductList />
-    </div>
+        <ProductList />
+      </div>
+    </>
   );
 }
