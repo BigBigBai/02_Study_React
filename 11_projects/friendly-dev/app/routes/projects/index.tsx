@@ -20,12 +20,6 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 4;
 
-  const totalPages = Math.ceil(projects.length / projectsPerPage);
-
-  const indexOfLast = currentPage * projectsPerPage;
-  const indexOfFirst = indexOfLast - projectsPerPage;
-  const currentProjects = projects.slice(indexOfFirst, indexOfLast);
-
   //   const renderPagination = () => (
   //     <div className='flex justify-center gap-2 mt-8'>
   //       {Array.from({ length: totalPages }, (_, idx) => (
@@ -44,16 +38,49 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
   //     </div>
   //   );
 
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const categories = ['All', ...new Set(projects.map((p) => p.category))];
+
+  const filteredProjects =
+    selectedCategory === 'All'
+      ? projects
+      : projects.filter((p) => p.category === selectedCategory);
+
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  const indexOfLast = currentPage * projectsPerPage;
+  const indexOfFirst = indexOfLast - projectsPerPage;
+  const currentProjects = filteredProjects.slice(indexOfFirst, indexOfLast);
+
   return (
     <>
       <h2 className='text-3xl font-bold mb-8 text-white'>🚀 Projects</h2>
-
+      {/* Category Filter */}
+      <div className='flex flex-wrap gap-2 mb-8'>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => {
+              setSelectedCategory(cat);
+              // Reset page number to 1 when category is changed
+              setCurrentPage(1);
+            }}
+            className={`px-3 py-1 rounded text-sm ${
+              selectedCategory === cat
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-700 text-gray-200'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+      ;
       <div className='grid gap-6 sm:grid-cols-2'>
         {currentProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
       </div>
-
       {/* {totalPages > 1 && renderPagination()} */}
       <Pagination
         totalPages={totalPages}
