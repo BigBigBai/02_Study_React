@@ -3,6 +3,7 @@ import type { Project } from '~/types';
 import ProjectCard from '~/components/ProjectCard';
 import { useState } from 'react';
 import Pagination from '~/components/Pagination';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export async function loader({
   request,
@@ -76,11 +77,18 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
         ))}
       </div>
       ;
-      <div className='grid gap-6 sm:grid-cols-2'>
+      {/* <div className='grid gap-6 sm:grid-cols-2'>
         {currentProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
-      </div>
+      </div> */}
+      <AnimatePresence mode='wait'>
+        <motion.div layout className='grid gap-6 sm:grid-cols-2'>
+          {currentProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </motion.div>
+      </AnimatePresence>
       {/* {totalPages > 1 && renderPagination()} */}
       <Pagination
         totalPages={totalPages}
