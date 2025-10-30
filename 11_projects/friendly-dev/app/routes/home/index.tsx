@@ -24,7 +24,7 @@ import Hero from '../../components/Hero';
 const HomePage = () => {
   return (
     <section>
-      <Hero name='White' />
+      {/* <Hero name='White' /> */}
     </section>
   );
 };
