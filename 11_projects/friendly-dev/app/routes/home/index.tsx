@@ -4,6 +4,7 @@ import FeatureProjects from '~/components/Feature-projects';
 import type { Route } from './+types/index';
 import type { Project } from '~/types';
 import FeaturedProjects from '~/components/Feature-projects';
+import AboutPreview from '~/components/About-preview';
 
 // export function meta({}: Route.MetaArgs) {
 //   return [
@@ -40,6 +41,7 @@ const HomePage = ({ loaderData }: Route.ComponentProps) => {
     <section>
       {/* <Hero name='White' /> */}
       <FeatureProjects projects={projects} count={2} />
+      <AboutPreview />
     </section>
   );
 };
