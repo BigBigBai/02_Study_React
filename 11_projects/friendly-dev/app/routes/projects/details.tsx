@@ -3,11 +3,13 @@ import type { Project } from '~/types';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router';
 
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+
 export async function clientLoader({
   request,
   params,
 }: Route.ClientLoaderArgs): Promise<Project> {
-  const res = await fetch(`http://localhost:8000/projects/${params.id}`);
+  const res = await fetch(`${VITE_API_URL}/projects/${params.id}`);
   if (!res.ok) {
     throw new Response('Project Not Found', { status: 404 });
   }
