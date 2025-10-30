@@ -2,6 +2,7 @@ import type { Route } from './+types/index';
 import type { Project } from '~/types';
 import ProjectCard from '~/components/ProjectCard';
 import { useState } from 'react';
+import Pagination from '~/components/Pagination';
 
 export async function loader({
   request,
@@ -25,23 +26,23 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
   const indexOfFirst = indexOfLast - projectsPerPage;
   const currentProjects = projects.slice(indexOfFirst, indexOfLast);
 
-  const renderPagination = () => (
-    <div className='flex justify-center gap-2 mt-8'>
-      {Array.from({ length: totalPages }, (_, idx) => (
-        <button
-          key={idx + 1}
-          onClick={() => setCurrentPage(idx + 1)}
-          className={`px-3 py-1 cursor-pointer rounded ${
-            currentPage === idx + 1
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-700 text-gray-200'
-          }`}
-        >
-          {idx + 1}
-        </button>
-      ))}
-    </div>
-  );
+  //   const renderPagination = () => (
+  //     <div className='flex justify-center gap-2 mt-8'>
+  //       {Array.from({ length: totalPages }, (_, idx) => (
+  //         <button
+  //           key={idx + 1}
+  //           onClick={() => setCurrentPage(idx + 1)}
+  //           className={`px-3 py-1 cursor-pointer rounded ${
+  //             currentPage === idx + 1
+  //               ? 'bg-blue-500 text-white'
+  //               : 'bg-gray-700 text-gray-200'
+  //           }`}
+  //         >
+  //           {idx + 1}
+  //         </button>
+  //       ))}
+  //     </div>
+  //   );
 
   return (
     <>
@@ -53,7 +54,12 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
         ))}
       </div>
 
-      {totalPages > 1 && renderPagination()}
+      {/* {totalPages > 1 && renderPagination()} */}
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </>
   );
 };
