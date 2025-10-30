@@ -1,4 +1,5 @@
 // import type { Route } from '../+types/home';
+import Hero from '../../components/Hero';
 
 // export function meta({}: Route.MetaArgs) {
 //   return [
@@ -23,7 +24,7 @@
 const HomePage = () => {
   return (
     <section>
-      <h1>Welcome</h1>
+      <Hero name='White' />
     </section>
   );
 };
