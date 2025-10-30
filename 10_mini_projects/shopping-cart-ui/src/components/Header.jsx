@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 
 export default function Header() {
-  const { cart } = useCart();
+  const { cart, removeFromCart, clearCart } = useCart();
   const itemCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
   const [showDropdown, setShowDropdown] = useState(false);
@@ -46,6 +46,12 @@ export default function Header() {
                             {item.qty} × ${item.price}
                           </p>
                         </div>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className='text-sm text-red-500 hover:underline'
+                        >
+                          Remove
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -54,6 +60,12 @@ export default function Header() {
                     <span>Total:</span>
                     <span>${total}</span>
                   </div>
+                  <button
+                    onClick={clearCart}
+                    className='mt-3 w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 transition'
+                  >
+                    Clear Cart
+                  </button>
                 </>
               )}
             </div>
