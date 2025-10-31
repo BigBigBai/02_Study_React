@@ -9,7 +9,10 @@ export async function clientLoader({
   request,
   params,
 }: Route.ClientLoaderArgs): Promise<Project> {
-  const res = await fetch(`/${VITE_API_URL}/projects/${params.id}`);
+  //   const res = await fetch(`http://localhost:8000/projects/${params.id}`);
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/projects/${params.id}`
+  );
   if (!res.ok) {
     throw new Response('Project Not Found', { status: 404 });
   }
