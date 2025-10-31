@@ -51,10 +51,7 @@ const AboutPage = () => {
             'Appwrite',
             'Docker',
           ].map((tech) => (
-            <li
-              key={tech}
-              className='bg-gray-200 bg-gray-700 px-3 py-1 rounded-md'
-            >
+            <li key={tech} className='bg-gray-700 px-3 py-1 rounded-md'>
               {tech}
             </li>
           ))}
