@@ -2,22 +2,43 @@ import type { Route } from './+types/details';
 import type { Project } from '~/types';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router';
+import type { StrapiResponse, StrapiProject } from '~/types';
 
-const VITE_API_URL = import.meta.env.VITE_API_URL;
+export async function loader({ params }: Route.LoaderArgs) {
+  const { id } = params;
 
-export async function clientLoader({
-  request,
-  params,
-}: Route.ClientLoaderArgs): Promise<Project> {
   //   const res = await fetch(`http://localhost:8000/projects/${params.id}`);
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/projects/${params.id}`
+    `${import.meta.env.VITE_API_URL}/projects?filters[documentId][$eq]=${id}&populate=*`
   );
+
   if (!res.ok) {
     throw new Response('Project Not Found', { status: 404 });
   }
-  const project: Project = await res.json();
-  return project;
+
+  const json: StrapiResponse<StrapiProject> = await res.json();
+
+  if (!json.data.length) {
+    throw new Response('Project Not Found', { status: 404 });
+  }
+
+  const item = json.data[0];
+
+  const project: Project = {
+    id: item.id,
+    documentId: item.documentId,
+    title: item.title,
+    description: item.description,
+    image: item.image?.url
+      ? `${import.meta.env.VITE_API_URL}${item.image.url}`
+      : '/images/no-image.png',
+    url: item.url,
+    date: item.date,
+    category: item.category,
+    featured: item.featured,
+  };
+
+  return { project };
 }
 
 export function HydrateFallback() {
