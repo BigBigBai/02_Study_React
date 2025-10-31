@@ -12,6 +12,7 @@ export default [
     route('contact', './routes/contact/index.tsx'),
     route('projects', './routes/projects/index.tsx'),
     route('blog', './routes/blog/index.tsx'),
+    route('blog/:slug', './routes/blog/details.tsx'),
     route('projects/:id', './routes/projects/details.tsx'),
     route('*', './routes/errors/not-found.tsx'),
   ]),
