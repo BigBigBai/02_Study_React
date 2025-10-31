@@ -1,9 +1,9 @@
 import type { Route } from './+types/index';
-import type { Project } from '~/types';
 import ProjectCard from '~/components/ProjectCard';
 import { useState } from 'react';
 import Pagination from '~/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
+import type { Project, StrapiProject, StrapiResponse } from '~/types';
 
 export async function loader({
   request,
@@ -17,9 +17,9 @@ export async function loader({
     throw new Error('Failed to fetch projects');
   }
 
-  const json = await res.json();
+  const json: StrapiResponse<StrapiProject> = await res.json();
 
-  console.log(json);
+  // console.log(json);
 
   const projects = json.data.map((item) => ({
     id: item.id,
@@ -98,7 +98,7 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
           </button>
         ))}
       </div>
-      ;
+
       {/* <div className='grid gap-6 sm:grid-cols-2'>
         {currentProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
