@@ -10,7 +10,7 @@ export async function loader({
 }: Route.LoaderArgs): Promise<{ projects: Project[] }> {
   // const res = await fetch('http://localhost:8000/projects');
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/projects?populate=*`
+    `${import.meta.env.VITE_API_URL}/api/projects?populate=*`
   );
 
   if (!res.ok) {
@@ -29,6 +29,8 @@ export async function loader({
     image: item.image?.url
       ? `${import.meta.env.VITE_API_URL}${item.image.url}`
       : '/images/no-image.png',
+    url: item.url,
+    date: item.date,
     category: item.category,
     featured: item.featured,
   }));
@@ -38,7 +40,7 @@ export async function loader({
 
 const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
   const { projects } = loaderData as { projects: Project[] };
-  //   console.log(projects);
+  // console.log(projects);
 
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 4;

@@ -9,20 +9,23 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   //   const res = await fetch(`http://localhost:8000/projects/${params.id}`);
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/projects?filters[documentId][$eq]=${id}&populate=*`
+    `${import.meta.env.VITE_API_URL}/api/projects?filters[documentId][$eq]=${id}&populate=*`
   );
+  // console.log(res);
 
   if (!res.ok) {
     throw new Response('Project Not Found', { status: 404 });
   }
 
   const json: StrapiResponse<StrapiProject> = await res.json();
+  // console.log(json);
 
   if (!json.data.length) {
     throw new Response('Project Not Found', { status: 404 });
   }
 
   const item = json.data[0];
+  // console.log(item);
 
   const project: Project = {
     id: item.id,
@@ -37,6 +40,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     category: item.category,
     featured: item.featured,
   };
+  // console.log(project);
 
   return { project };
 }
@@ -46,8 +50,8 @@ export function HydrateFallback() {
 }
 
 const ProjectDetailPage = ({ loaderData }: Route.ComponentProps) => {
-  const project = loaderData as Project;
-  //   console.log(project);
+  const { project } = loaderData;
+  // console.log(project);
 
   return (
     <>
