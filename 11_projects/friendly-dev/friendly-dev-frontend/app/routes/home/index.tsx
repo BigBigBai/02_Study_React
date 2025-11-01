@@ -7,6 +7,7 @@ import FeaturedProjects from '~/components/Feature-projects';
 import AboutPreview from '~/components/About-preview';
 import type { PostMeta } from '~/types';
 import LatestPosts from '~/components/LatestPosts';
+import type { StrapiResponse, StrapiProject } from '~/types';
 
 // export function meta({}: Route.MetaArgs) {
 //   return [
@@ -37,7 +38,9 @@ export async function loader({
   const url = new URL(request.url);
 
   const [projectRes, postRes] = await Promise.all([
-    fetch(`${import.meta.env.VITE_API_URL}/projects`),
+    fetch(
+      `${import.meta.env.VITE_API_URL}/api/projects?filters[featured][$eq]=true&populate=*`
+    ),
     fetch(new URL('/posts-meta.json', url).href),
   ]);
 
@@ -45,16 +48,34 @@ export async function loader({
     throw new Error('Failed to fetch projects or posts');
   }
 
-  const [projects, posts] = await Promise.all([
-    projectRes.json(),
-    postRes.json(),
-  ]);
+  // const [projects, posts] = await Promise.all([
+  //   projectRes.json(),
+  //   postRes.json(),
+  // ]);
 
-  return { projects, posts };
+  const projectJson: StrapiResponse<StrapiProject> = await projectRes.json();
+  const postJson: PostMeta[] = await postRes.json();
+
+  const projects: Project[] = projectJson.data.map((item) => ({
+    id: item.id,
+    documentId: item.documentId,
+    title: item.title,
+    description: item.description,
+    image: item.image?.url
+      ? `${import.meta.env.VITE_API_URL}${item.image.url}`
+      : '/images/no-image.png',
+    url: item.url,
+    date: item.date,
+    category: item.category,
+    featured: item.featured,
+  }));
+
+  return { projects, posts: postJson };
 }
 
 const HomePage = ({ loaderData }: Route.ComponentProps) => {
-  const { projects, posts } = loaderData as { projects: Project[] };
+  const { projects, posts } = loaderData;
+
   return (
     <section>
       {/* <Hero name='White' /> */}
